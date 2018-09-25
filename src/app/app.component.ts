@@ -33,6 +33,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       console.log(window['plugins']);
       console.log(cordova.plugins);
+      console.log(cordova);
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
