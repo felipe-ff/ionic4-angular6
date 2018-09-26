@@ -6,7 +6,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
+import { AlertController } from 'ionic-angular';
+
 declare const cordova:any;
+
+declare var notificationListener: any;
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +22,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private alertCtrl: AlertController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -31,9 +35,25 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      console.log(window['plugins']);
-      console.log(cordova.plugins);
-      console.log(cordova);
+      //console.log(window['plugins']);
+      //console.log(cordova.plugins);
+      //console.log(cordova);
+      console.log(notificationListener);
+
+      let alert = this.alertCtrl.create({
+        title: 'Low battery',
+        subTitle: window['plugins'],
+        buttons: ['Dismiss']
+      });
+
+      notificationListener.listen(function(n){
+        alert.present();
+        console.log("Received notification " + JSON.stringify(n) );
+      }, function(e){
+        alert.present();
+        console.log("Notification Error " + e);
+      });
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
