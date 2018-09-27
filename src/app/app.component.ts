@@ -8,8 +8,6 @@ import { ListPage } from '../pages/list/list';
 
 import { AlertController } from 'ionic-angular';
 
-declare const cordova:any;
-
 declare var notificationListener: any;
 
 @Component({
@@ -36,21 +34,20 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       //console.log(window['plugins']);
-      //console.log(cordova.plugins);
-      //console.log(cordova);
       console.log(notificationListener);
 
       let alert = this.alertCtrl.create({
-        title: 'Low battery',
-        subTitle: window['plugins'],
+        title: 'empty',
+        subTitle: 'empty',
         buttons: ['Dismiss']
       });
 
       notificationListener.listen(function(n){
+        alert.setTitle('Notificação recebida de:' + n.title);
+        alert.setSubTitle(n.text);
         alert.present();
-        console.log("Received notification " + JSON.stringify(n) );
+        console.log("Received notification " + JSON.stringify(n));
       }, function(e){
-        alert.present();
         console.log("Notification Error " + e);
       });
 
