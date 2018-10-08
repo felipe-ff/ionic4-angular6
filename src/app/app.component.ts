@@ -8,7 +8,7 @@ import { ListPage } from '../pages/list/list';
 
 import { AlertController } from 'ionic-angular';
 
-declare var notificationListener: any;
+import { Storage } from '@ionic/storage';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,9 +18,11 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
+  test = "asdsd";
+
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private alertCtrl: AlertController) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public alertCtrl: AlertController, public storage: Storage) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -34,22 +36,7 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       //console.log(window['plugins']);
-      console.log(notificationListener);
 
-      let alert = this.alertCtrl.create({
-        title: 'empty',
-        subTitle: 'empty',
-        buttons: ['Dismiss']
-      });
-
-      notificationListener.listen(function(n){
-        alert.setTitle('Notificação recebida de:' + n.title);
-        alert.setSubTitle(n.text);
-        alert.present();
-        console.log("Received notification " + JSON.stringify(n));
-      }, function(e){
-        console.log("Notification Error " + e);
-      });
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
