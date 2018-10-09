@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { NgZone  } from '@angular/core';
 import { Events } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 declare var notificationListener: any;
@@ -23,11 +22,15 @@ export class ListPage {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
 
+    this.storage.get('list').then((val) => {
+      this.notifications = val;
+    });
+
     this.events.subscribe('updateScreen', () => {
       this.zone.run(() => {
         console.log('force update the screen');
         this.storage.get('list').then((val) => {
-          this.notifications.push(val);
+          this.notifications= val;
         });
       });
     });

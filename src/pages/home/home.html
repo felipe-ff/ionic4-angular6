@@ -14,6 +14,10 @@
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
   </p>
 
+  <p *ngFor="let msg of debugMsg">
+    {{msg}}
+  </p>
+
   <p *ngFor="let recipient of notifications">
     {{recipient}}
   </p>

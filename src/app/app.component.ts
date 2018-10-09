@@ -18,8 +18,6 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  test = "asdsd";
-
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public alertCtrl: AlertController, public storage: Storage) {
@@ -36,7 +34,6 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       //console.log(window['plugins']);
-
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
