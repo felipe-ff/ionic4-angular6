@@ -11,8 +11,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { Autostart } from '@ionic-native/autostart';
-import { Push } from '@ionic-native/push';
-
 //import { NotificationService } from '../../plugins/net.coconauts.notification-listener/www/notification-listener.js';
 
 @NgModule({
@@ -36,7 +34,6 @@ import { Push } from '@ionic-native/push';
     StatusBar,
     SplashScreen,
     Autostart,
-    Push,
     //NotificationService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
