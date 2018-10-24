@@ -23,7 +23,7 @@ export class ListPage {
     this.selectedItem = navParams.get('item');
 
     this.storage.get('list').then((val) => {
-      this.notifications = val;
+      if (val) this.notifications = val;
     });
 
     this.events.subscribe('updateScreen', () => {
