@@ -13,12 +13,20 @@ declare var notificationListener: any;
 })
 export class HomePage {
 
-  notifications = [];
+  notifications = ['teste'];
 
-  constructor(public navCtrl: NavController, public storage: Storage, public events: Events, private zone: NgZone) {
+  constructor(public navCtrl: NavController, public storage: Storage, public events: Events, private zone: NgZone, public alertCtrl: AlertController) {
+
+    //this.storage.remove('title');
 
     this.storage.get('title').then((val) => {
-      this.notifications = val;
+      if (val) this.notifications = val;
+      /*let alert = this.alertCtrl.create({
+        title: 'empty',
+        subTitle: this.notifications[0]+'',
+        buttons: ['Dismiss']
+      });
+      alert.present();*/
     });
 
     this.events.subscribe('updateScreen', () => {
@@ -37,10 +45,11 @@ export class HomePage {
     }*/
 
     notificationListener.listen((n) => {
-      //if (n.text.toUpperCase().indexOf('COMPRA') >= 0) {
+      if (n.text.toUpperCase().indexOf('COMPRA') >= 0) {
+        //alert.present();
         this.notifications.push(n.title + '-' + n.text);
         storage.set('title', this.notifications);
-      //}
+      }
 
       events.publish('updateScreen');
       //console.log("Received notification " + JSON.stringify(n));
