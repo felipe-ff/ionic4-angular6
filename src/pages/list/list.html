@@ -9,8 +9,9 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of notifications" (click)="itemTapped($event, item)">
+    <button ion-item text-wrap *ngFor="let item of notifications">
       <ion-icon name="card" item-start></ion-icon>
+      <ion-icon name="close" item-end (click)="removeItem($event, item)"></ion-icon>
       {{item}}
       <!--<div class="item-note" item-end>
         {{item.note}}
