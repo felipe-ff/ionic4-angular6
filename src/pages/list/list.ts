@@ -39,7 +39,7 @@ export class ListPage {
     try {
       notificationListener.listen((n) => {
         if (n.text.toUpperCase().indexOf('COMPRA') >= 0) {
-          this.notifications.push(n.title + '-' + n.text);
+          this.notifications.push(n.title + ' - ' + n.text);
           storage.set('list', this.notifications);
           events.publish('updateScreen');
         }
