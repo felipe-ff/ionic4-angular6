@@ -1,3 +1,11 @@
 page-list {
 
+
+  ion-fab[bottom] {
+    bottom: 27px;
+  }
+
+  ion-fab[right] {
+    right: calc(27px + env(safe-area-inset-right));
+  }
 }
