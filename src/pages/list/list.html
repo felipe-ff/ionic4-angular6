@@ -18,6 +18,11 @@
       </div>-->
     </button>
   </ion-list>
+  <ion-fab right bottom (click)="presentPrompt()">
+    <button ion-fab color="primary">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
   <div *ngIf="selectedItem" padding>
     You navigated here from <b>{{selectedItem.title}}</b>
   </div>
