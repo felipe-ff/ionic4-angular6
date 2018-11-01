@@ -43,7 +43,7 @@ export class ListPage {
     });
 
     setInterval(() => {
-      this.startTimer(); // Now the "this" still references the component
+      this.readFromBGSPlugin(); // Now the "this" still references the component
     }, 4000);
   }
 
@@ -68,7 +68,7 @@ export class ListPage {
     this.storage.set("list", this.notifications);
   }
 
-  startTimer() {
+  readFromBGSPlugin() {
     const t = window["setConfig"]();
     t.then(val => {
       if (val) {
