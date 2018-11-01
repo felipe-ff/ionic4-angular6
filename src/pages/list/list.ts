@@ -39,7 +39,7 @@ export class ListPage {
 
     setInterval(() => {
       this.startTimer(); // Now the "this" still references the component
-   }, 4500);
+   }, 4000);
 
   }
 
