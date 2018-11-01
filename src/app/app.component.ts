@@ -35,25 +35,13 @@ export class MyApp {
     this.platform.ready().then(() => {
       //console.log(window['plugins']);
       try {
-        /* let alert = this.alertCtrl.create({
-          title: 'ok!',
-          subTitle: window['go'](),
-          buttons: ['Dismiss']
-          });
-          alert.present(); */
         window['go']();
-        //while ()
        /*  const status = window['getStatus']();
         status.then((val) => {
           window['setConfig']();
         }); */
       } catch(e) {
-        let alert = this.alertCtrl.create({
-          title: 'error!',
-          subTitle: e,
-          buttons: ['Dismiss']
-          });
-          alert.present();
+        this.showAlert(e);
       }
 
       // Okay, so the platform is ready and our plugins are available.
@@ -67,5 +55,14 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  showAlert(msg) {
+    let alert = this.alertCtrl.create({
+    title: 'error!',
+    subTitle: msg,
+    buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }
