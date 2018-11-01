@@ -7,9 +7,6 @@ import { Storage } from '@ionic/storage';
 //import { WebIntent } from '@ionic-native/web-intent';
 //import { BackgroundMode } from '@ionic-native/background-mode';
 
-declare var notificationListener: any;
-//declare var backgroundService: any;
-
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
@@ -42,12 +39,12 @@ export class ListPage {
 
     setInterval(() => {
       this.startTimer(); // Now the "this" still references the component
-   }, 7000);
+   }, 4500);
 
   }
 
-  pushToArrayAndStorage(title, text) {
-    this.notifications.push(title + ' - ' + text)
+  pushToArrayAndStorage(ntf) {
+    this.notifications.push(ntf)
     this.storage.set('list', this.notifications);
     this.events.publish('updateScreen');
   }
@@ -71,7 +68,7 @@ export class ListPage {
     const t = window['setConfig']();
     t.then((val) => {
       if (val) {
-        this.pushToArrayAndStorage('Ntfs', val);
+        this.pushToArrayAndStorage(val);
         window['setConfig'](true);
       }
     });
@@ -96,7 +93,7 @@ export class ListPage {
         {
           text: 'Adicionar',
           handler: data => {
-            this.pushToArrayAndStorage('Adicionado Manulamente - R$ ', data.value);
+            this.pushToArrayAndStorage('Adicionado Manulamente - R$ ' + data.value);
           }
         }
       ]
