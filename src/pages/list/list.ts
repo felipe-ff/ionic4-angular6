@@ -19,7 +19,7 @@ export class ListPage {
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
   notifications = ['teste2'];
-  maxtime: any = 0;
+  firstPass = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
               public events: Events, private zone: NgZone, public alertCtrl: AlertController, //private backgroundMode: BackgroundMode, //private webIntent: WebIntent
@@ -121,12 +121,13 @@ export class ListPage {
    }
 
 	startTimer() {
-      const t = window['setConfig']();
-      t.then((val) => {
-      	if (val) {
-      		this.pushToArrayAndStorage('Ntfs', val);
-      	}
-      });
+    const t = window['setConfig']();
+    t.then((val) => {
+      if (val) {
+        this.pushToArrayAndStorage('Ntfs', val);
+        window['setConfig'](true);
+      }
+    });
 	}
 
   filter(title, text) {

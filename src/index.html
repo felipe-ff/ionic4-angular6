@@ -53,19 +53,11 @@
      });
    }
 
-   function setConfig() {
-     //var helloToTxt = document.getElementById("helloToTxt");
-    /*  var helloToString = 'testefelipe';
-     var config = {
-             //"HelloTo" : helloToString
-           };
-     myService.setConfiguration(	config,
-                   function(r){handleSuccess(r)},
-                   function(e){handleError(e)}); */
-
-      var config = {
-             //"HelloTo" : helloToString
-           };
+   function setConfig(reset) {
+     var config = { };
+     if (reset) {
+       config.HelloTo = '';
+      }
      return new Promise( function( resolve, reject ){
           function displayResult(data) {
             console.log( data );
