@@ -5,7 +5,7 @@ import { NgZone  } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 //import { WebIntent } from '@ionic-native/web-intent';
-import { BackgroundMode } from '@ionic-native/background-mode';
+//import { BackgroundMode } from '@ionic-native/background-mode';
 
 declare var notificationListener: any;
 //declare var backgroundService: any;
@@ -19,17 +19,19 @@ export class ListPage {
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
   notifications = ['teste2'];
+  maxtime: any = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
-              public events: Events, private zone: NgZone, public alertCtrl: AlertController, private backgroundMode: BackgroundMode, //private webIntent: WebIntent
+              public events: Events, private zone: NgZone, public alertCtrl: AlertController, //private backgroundMode: BackgroundMode, //private webIntent: WebIntent
               ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
 
-    //console.log(backgroundService);
-    backgroundMode.enable();
-    backgroundMode.excludeFromTaskList();
+
+    //backgroundMode.enable();
+    //backgroundMode.excludeFromTaskList();
     //this.testIfBackground();
+
 
     this.storage.get('list').then((val) => {
       if (val && val.length > 0) this.notifications = val;
@@ -44,17 +46,32 @@ export class ListPage {
       });
     });
 
-    try {
+    setInterval(() => {
+      this.startTimer(); // Now the "this" still references the component
+   }, 7000);
+
+    //this.startTimer();
+
+    /* try {
       notificationListener.listen((n) => {
-        if (this.filter(n.title, n.text)) {
-          this.pushToArrayAndStorage(n.title, n.text);
+         try {
+          const t = window['setConfig']();
+          //this.pushToArrayAndStorage('status', t);
+           //t.then((val) => {
+            this.pushToArrayAndStorage('status', t);
+          //});
+        } catch(e) {
+          this.pushToArrayAndStorage('error', e);
         }
+        // if (this.filter(n.title, n.text)) {
+        //  this.pushToArrayAndStorage(n.title, n.text);
+        //}
       }, function(e) {
         console.log("Notification Error " + e);
       });
     } catch(e) {
       this.pushToArrayAndStorage('ERROR', 'notificationListener Undefined');
-    }
+    } */
 
   }
 
@@ -66,7 +83,7 @@ export class ListPage {
       buttons: ['Dismiss']
     });
     alert.present();*/
-    if ((<any>window).plugins)
+   /*  if ((<any>window).plugins)
     (<any>window).plugins.intentShim.getIntent((intent) => {
       if (intent) {
         let s = '';
@@ -79,7 +96,7 @@ export class ListPage {
       } else {
         //this.pushToArrayAndStorage('debug', 'empty');
       }
-    }, () => this.pushToArrayAndStorage('debug', 'intent error'));
+    }, () => this.pushToArrayAndStorage('debug', 'intent error')); */
   }
 
   pushToArrayAndStorage(title, text) {
@@ -96,12 +113,21 @@ export class ListPage {
   }
 
   removeItem(event, item) {
-    const index = this.notifications.indexOf(item, 0);
-    if (index > -1) {
-      this.notifications.splice(index, 1);
-    }
-    this.storage.set('list', this.notifications);
-  }
+  	  const index = this.notifications.indexOf(item, 0);
+     if (index > -1) {
+       this.notifications.splice(index, 1);
+     }
+     this.storage.set('list', this.notifications);
+   }
+
+	startTimer() {
+      const t = window['setConfig']();
+      t.then((val) => {
+      	if (val) {
+      		this.pushToArrayAndStorage('Ntfs', val);
+      	}
+      });
+	}
 
   filter(title, text) {
     title = title.toUpperCase();;
@@ -140,4 +166,5 @@ export class ListPage {
     });
     alert.present();
   }
+
 }

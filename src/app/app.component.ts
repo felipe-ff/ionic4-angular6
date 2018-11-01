@@ -34,6 +34,27 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       //console.log(window['plugins']);
+      try {
+        /* let alert = this.alertCtrl.create({
+          title: 'ok!',
+          subTitle: window['go'](),
+          buttons: ['Dismiss']
+          });
+          alert.present(); */
+        window['go']();
+        //while ()
+       /*  const status = window['getStatus']();
+        status.then((val) => {
+          window['setConfig']();
+        }); */
+      } catch(e) {
+        let alert = this.alertCtrl.create({
+          title: 'error!',
+          subTitle: e,
+          buttons: ['Dismiss']
+          });
+          alert.present();
+      }
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

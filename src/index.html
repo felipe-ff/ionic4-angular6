@@ -17,6 +17,124 @@
 
   <!-- cordova.js required for cordova apps (remove if not needed) -->
   <script src="cordova.js"></script>
+  <script type="text/javascript">
+    myService = "";
+    serviceRunning = "";
+    resultNotifications = "";
+
+   document.addEventListener('deviceready', function() {
+      var serviceName = 'io.ionic.starter.MyService';
+      var factory = cordova.require('com.red_folder.phonegap.plugin.backgroundservice.BackgroundService');
+      myService = factory.create(serviceName);
+   }, true);
+
+   function handleSuccess(data) {
+      resultNotifications = data.Configuration.HelloTo;
+      alert("TESTE :" + resultNotifications);
+   }
+
+   function getStoredNotifications() {
+     return resultNotifications;
+   }
+
+   function handleError(data) {
+      alert("Error: " + data.ErrorMessage);
+      alert(JSON.stringify(data));
+      updateView(data);
+   }
+
+   function getStatus() {
+     return new Promise( function( resolve, reject ){
+          function displayResult(data) {
+            console.log( data );
+            resolve(data.ServiceRunning);
+          }
+        myService.getStatus(function(r){displayResult(r)}, function(e){displayError(e)});
+     });
+   }
+
+   function setConfig() {
+     //var helloToTxt = document.getElementById("helloToTxt");
+    /*  var helloToString = 'testefelipe';
+     var config = {
+             //"HelloTo" : helloToString
+           };
+     myService.setConfiguration(	config,
+                   function(r){handleSuccess(r)},
+                   function(e){handleError(e)}); */
+
+      var config = {
+             //"HelloTo" : helloToString
+           };
+     return new Promise( function( resolve, reject ){
+          function displayResult(data) {
+            console.log( data );
+            //alert("TESTE :" + data.Configuration.HelloTo);
+            resolve(data.Configuration.HelloTo);
+          }
+          myService.setConfiguration(	config,
+                   function(r){displayResult(r)},
+                   function(e){displayError(e)});
+     });
+   }
+
+   function displayError(data) {
+    let s = '';
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          s += data[key] + ' - ';
+        }
+      }
+      alert("We have an error: " + s);
+   }
+
+   function updateHandler(data) {
+    console.log( data );
+       if (data.LatestResult != null) {
+          try {
+             console.log(data.LatestResult.Message );
+          } catch (err) {
+          }
+       }
+    }
+
+    function go() {
+      myService.getStatus(function(r) {
+        startService(r);
+      }, function(e) {displayError(e)}
+      );
+    };
+
+    function startService(data) {
+      if (data.ServiceRunning) {
+         //setConfig(); //inseri manual
+         enableTimer(data);
+      } else {
+         myService.startService(function(r) {
+           enableTimer(r);
+         }, function(e){displayError(e)});
+      }
+   }
+
+   function enableTimer(data) {
+      if (data.TimerEnabled) {
+         registerForUpdates(data);
+      } else {
+         myService.enableTimer(1000, function(r){registerForUpdates(r)}, function(e){displayError(e)});
+      }
+   }
+
+   function registerForUpdates(data) {
+    if (!data.RegisteredForUpdates) {
+       myService.registerForUpdates(function(r){updateHandler(r)}, function(e){ console.log(e) });
+    }
+ }
+
+  function stopService() {
+        myService.stopService(  function(r){ console.log('Service Stopped'); },
+                                function(e){ alert('Error while stopping the service.')});
+    }
+ </script>
 
   <!-- un-comment this code to enable service worker
   <script>
