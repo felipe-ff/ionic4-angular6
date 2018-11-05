@@ -54,22 +54,24 @@ export class ListPage {
   }
 
   readFromBGSPlugin() {
-    const t = this.util.setConfig(false);
-    t.then(val => {
-      if (val) {
-        const values = val.toString().split('%-%');
-        for (let i = 0; i < values.length; i++) {
-          if (values[i]) {
-            this.pushToArrayAndStorage(values[i]);
-          }
+    try {
+      const promise = this.util.setConfig(false);
+      promise.then(val => {
+        const newVal = val.toString();
+        if (newVal) {
+          const values = newVal.toString().split('%-%');
+          const nonEmptyValues = values.filter(function(e) { return e; }); //remove valores vazios do array
+          this.pushToArrayAndStorage(nonEmptyValues);
+          this.util.setConfig(true);
         }
-        this.util.setConfig(true);
-      }
-    });
+      });
+    } catch(e) {
+      this.showAlert(e);
+    }
   }
 
-  pushToArrayAndStorage(ntf) {
-    this.notifications.push(ntf);
+  pushToArrayAndStorage(array) {
+    this.notifications = this.notifications.concat(array);
     this.storage.set("list", this.notifications);
     this.events.publish("updateScreen");
   }
@@ -88,7 +90,6 @@ export class ListPage {
     }
     this.storage.set("list", this.notifications);
   }
-
 
   presentPrompt() {
     let alert = this.alertCtrl.create({
