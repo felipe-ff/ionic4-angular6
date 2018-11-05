@@ -4,6 +4,7 @@ import { AlertController } from "ionic-angular";
 import { NgZone } from "@angular/core";
 import { Events } from "ionic-angular";
 import { Storage } from "@ionic/storage";
+import { UtilityService } from '../../services/utility.service';
 //import { WebIntent } from '@ionic-native/web-intent';
 //import { BackgroundMode } from '@ionic-native/background-mode';
 
@@ -24,13 +25,16 @@ export class ListPage {
     public storage: Storage,
     public events: Events,
     private zone: NgZone,
+    private util: UtilityService,
     public alertCtrl: AlertController //private backgroundMode: BackgroundMode, //private webIntent: WebIntent
   ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get("item");
 
     this.storage.get("list").then(val => {
-      if (val && val.length > 0) this.notifications = val;
+      if (val && val.length > 0) {
+          this.notifications = val;
+      }
     });
 
     this.events.subscribe("updateScreen", () => {
@@ -44,11 +48,28 @@ export class ListPage {
 
     setInterval(() => {
       this.readFromBGSPlugin(); // Now the "this" still references the component
-    }, 4000);
+    }, 3000);
+
+    //this.showAlert(cordova);
+  }
+
+  readFromBGSPlugin() {
+    const t = this.util.setConfig(false);
+    t.then(val => {
+      if (val) {
+        const values = val.toString().split('%-%');
+        for (let i = 0; i < values.length; i++) {
+          if (values[i]) {
+            this.pushToArrayAndStorage(values[i]);
+          }
+        }
+        this.util.setConfig(true);
+      }
+    });
   }
 
   pushToArrayAndStorage(ntf) {
-  	 this.notifications.push(ntf);
+    this.notifications.push(ntf);
     this.storage.set("list", this.notifications);
     this.events.publish("updateScreen");
   }
@@ -68,15 +89,6 @@ export class ListPage {
     this.storage.set("list", this.notifications);
   }
 
-  readFromBGSPlugin() {
-    const t = window["setConfig"]();
-    t.then(val => {
-      if (val) {
-        this.pushToArrayAndStorage(val);
-        window["setConfig"](true);
-      }
-    });
-  }
 
   presentPrompt() {
     let alert = this.alertCtrl.create({
@@ -103,6 +115,15 @@ export class ListPage {
           }
         }
       ]
+    });
+    alert.present();
+  }
+
+  showAlert(msg) {
+    let alert = this.alertCtrl.create({
+      title: 'Teste!',
+      subTitle: msg,
+      buttons: ['Dismiss']
     });
     alert.present();
   }

@@ -9,6 +9,7 @@ import { ListPage } from '../pages/list/list';
 import { AlertController } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
+import { UtilityService } from '../services/utility.service';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +22,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    public alertCtrl: AlertController, public storage: Storage) {
+    public alertCtrl: AlertController, public storage: Storage, private util: UtilityService) {
 
     this.initializeApp();
 
@@ -37,7 +38,8 @@ export class MyApp {
     this.platform.ready().then(() => {
       //console.log(window['plugins']);
       try {
-        window['go']();
+        this.util.initialize();
+        this.util.go();
        /*  const status = window['getStatus']();
         status.then((val) => {
           window['setConfig']();
