@@ -5,8 +5,6 @@ import { NgZone } from "@angular/core";
 import { Events } from "ionic-angular";
 import { Storage } from "@ionic/storage";
 import { UtilityService } from '../../services/utility.service';
-//import { WebIntent } from '@ionic-native/web-intent';
-//import { BackgroundMode } from '@ionic-native/background-mode';
 
 @Component({
   selector: "page-list",
@@ -49,8 +47,6 @@ export class ListPage {
     setInterval(() => {
       this.readFromBGSPlugin(); // Now the "this" still references the component
     }, 3000);
-
-    //this.showAlert(cordova);
   }
 
   readFromBGSPlugin() {
@@ -87,8 +83,8 @@ export class ListPage {
     const index = this.notifications.indexOf(item, 0);
     if (index > -1) {
       this.notifications.splice(index, 1);
+      this.storage.set("list", this.notifications);
     }
-    this.storage.set("list", this.notifications);
   }
 
   presentPrompt() {
