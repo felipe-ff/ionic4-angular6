@@ -17,7 +17,7 @@ import { UtilityService } from '../services/utility.service';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ListPage;
+  rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -38,14 +38,16 @@ export class MyApp {
     this.platform.ready().then(() => {
       //console.log(window['plugins']);
       try {
-        this.util.initialize();
-        this.util.go();
+        if ( !(this.platform.is('mobileweb') || this.platform.is('core')) )  {
+          this.util.initialize();
+          this.util.go();
+        }
        /*  const status = window['getStatus']();
         status.then((val) => {
           window['setConfig']();
         }); */
       } catch(e) {
-        this.showAlert(e);
+        //this.showAlert(e); Descomentar para build
       }
 
       /* Okay, so the platform is ready and our plugins are available.

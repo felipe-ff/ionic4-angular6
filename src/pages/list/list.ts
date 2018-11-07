@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
+import { Platform } from 'ionic-angular';
 import { AlertController } from "ionic-angular";
 import { NgZone } from "@angular/core";
 import { Events } from "ionic-angular";
@@ -15,7 +16,6 @@ export class ListPage {
   icons: string[];
   items: Array<{ title: string; note: string; icon: string }>;
   notifications = ["teste2"];
-  firstPass = true;
 
   constructor(
     public navCtrl: NavController,
@@ -24,7 +24,8 @@ export class ListPage {
     public events: Events,
     private zone: NgZone,
     private util: UtilityService,
-    public alertCtrl: AlertController //private backgroundMode: BackgroundMode, //private webIntent: WebIntent
+    private platform: Platform,
+    public alertCtrl: AlertController //private backgroundMode: BackgroundMode, private webIntent: WebIntent
   ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get("item");
@@ -51,16 +52,18 @@ export class ListPage {
 
   readFromBGSPlugin() {
     try {
-      const promise = this.util.setConfig(false);
-      promise.then(val => {
-        const newVal = val.toString();
-        if (newVal) {
-          const values = newVal.toString().split('%-%');
-          const nonEmptyValues = values.filter(function(e) { return e; }); //remove valores vazios do array
-          this.pushToArrayAndStorage(nonEmptyValues);
-          this.util.setConfig(true);
-        }
-      });
+      if ( !(this.platform.is('mobileweb') || this.platform.is('core')) )  {
+        const promise = this.util.setConfig(false);
+        promise.then(val => {
+          const newVal = val.toString();
+          if (newVal) {
+            const values = newVal.toString().split('%-%');
+            const nonEmptyValues = values.filter(function(e) { return e; }); //remove valores vazios do array
+            this.pushToArrayAndStorage(nonEmptyValues);
+            this.util.setConfig(true);
+          }
+        });
+      }
     } catch(e) {
       this.showAlert(e);
     }
