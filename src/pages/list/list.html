@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item text-wrap *ngFor="let item of notifications">
+    <button ion-item text-wrap *ngFor="let item of globals.notifications">
       <ion-icon name="card" item-start></ion-icon>
       <ion-icon name="close" item-end (click)="removeItem($event, item)"></ion-icon>
       {{item.msg}}

@@ -16,7 +16,6 @@ export class ListPage {
   selectedItem: any;
   icons: string[];
   items: Array<{ title: string; note: string; icon: string }>;
-  notifications;
 
   constructor(
     public navCtrl: NavController,
@@ -24,19 +23,13 @@ export class ListPage {
     public storage: Storage,
     public events: Events,
     private zone: NgZone,
-    private globals: Globals,
+    public globals: Globals,
     private util: UtilityService,
     private platform: Platform,
     public alertCtrl: AlertController //private backgroundMode: BackgroundMode, private webIntent: WebIntent
   ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get("item");
-
-    this.notifications = this.globals.notifications;
-    setInterval(() => {
-      this.notifications = this.globals.notifications;
-    }, 1000);
-
   }
 
   itemTapped(event, item) {
@@ -47,10 +40,10 @@ export class ListPage {
   }
 
   removeItem(event, item) {
-    const index = this.notifications.indexOf(item, 0);
+    const index = this.globals.notifications.indexOf(item, 0);
     if (index > -1) {
-      this.notifications.splice(index, 1);
-      this.storage.set("list", this.notifications);
+      this.globals.notifications.splice(index, 1);
+      this.storage.set("list", this.globals.notifications);
     }
   }
 
