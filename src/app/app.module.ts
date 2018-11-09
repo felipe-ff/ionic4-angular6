@@ -13,6 +13,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Autostart } from '@ionic-native/autostart';
 
 import { UtilityService } from '../services/utility.service';
+import { Globals } from '../services/globals';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { UtilityService } from '../services/utility.service';
     StatusBar,
     SplashScreen,
     Autostart,
+    Globals,
     UtilityService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

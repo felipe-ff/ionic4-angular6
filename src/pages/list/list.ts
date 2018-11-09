@@ -6,6 +6,7 @@ import { NgZone } from "@angular/core";
 import { Events } from "ionic-angular";
 import { Storage } from "@ionic/storage";
 import { UtilityService } from '../../services/utility.service';
+import { Globals } from '../../services/globals';
 
 @Component({
   selector: "page-list",
@@ -15,7 +16,7 @@ export class ListPage {
   selectedItem: any;
   icons: string[];
   items: Array<{ title: string; note: string; icon: string }>;
-  notifications = ["teste2"];
+  notifications;
 
   constructor(
     public navCtrl: NavController,
@@ -23,6 +24,7 @@ export class ListPage {
     public storage: Storage,
     public events: Events,
     private zone: NgZone,
+    private globals: Globals,
     private util: UtilityService,
     private platform: Platform,
     public alertCtrl: AlertController //private backgroundMode: BackgroundMode, private webIntent: WebIntent
@@ -30,49 +32,11 @@ export class ListPage {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get("item");
 
-    this.storage.get("list").then(val => {
-      if (val && val.length > 0) {
-          this.notifications = val;
-      }
-    });
-
-    this.events.subscribe("updateScreen", () => {
-      this.zone.run(() => {
-        console.log("force update the screen");
-        this.storage.get("list").then(val => {
-          this.notifications = val;
-        });
-      });
-    });
-
+    this.notifications = this.globals.notifications;
     setInterval(() => {
-      this.readFromBGSPlugin(); // Now the "this" still references the component
-    }, 3000);
-  }
+      this.notifications = this.globals.notifications;
+    }, 1000);
 
-  readFromBGSPlugin() {
-    try {
-      if ( !(this.platform.is('mobileweb') || this.platform.is('core')) )  {
-        const promise = this.util.setConfig(false);
-        promise.then(val => {
-          const newVal = val.toString();
-          if (newVal) {
-            const values = newVal.toString().split('%-%');
-            const nonEmptyValues = values.filter(function(e) { return e; }); //remove valores vazios do array
-            this.pushToArrayAndStorage(nonEmptyValues);
-            this.util.setConfig(true);
-          }
-        });
-      }
-    } catch(e) {
-      this.showAlert(e);
-    }
-  }
-
-  pushToArrayAndStorage(array) {
-    this.notifications = this.notifications.concat(array);
-    this.storage.set("list", this.notifications);
-    this.events.publish("updateScreen");
   }
 
   itemTapped(event, item) {
@@ -117,6 +81,12 @@ export class ListPage {
       ]
     });
     alert.present();
+  }
+
+  pushToArrayAndStorage(array) { //Mover para um service pq tem 2
+    this.globals.notifications = this.globals.notifications.concat(array);
+    this.storage.set("list", this.globals.notifications);
+    this.events.publish("updateScreen");
   }
 
   showAlert(msg) {

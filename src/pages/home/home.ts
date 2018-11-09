@@ -6,6 +6,7 @@ import { AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { chart } from 'highcharts';
 import * as Highcharts from 'highcharts';
+import { Globals } from '../../services/globals';
 
 //declare var notificationListener: any;
 
@@ -20,9 +21,14 @@ export class HomePage {
   @ViewChild('chartTarget') chartTarget: ElementRef;
   chart: Highcharts.ChartObject;
 
-  constructor(public navCtrl: NavController, public storage: Storage, public events: Events, private zone: NgZone, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private globals: Globals, public storage: Storage,
+              public events: Events, private zone: NgZone, public alertCtrl: AlertController) {
 
-    /*if (this.notifications.length > 0) {
+    //console.log(globals.notifications);
+  }
+
+  clearStorage() {
+  /*if (this.notifications.length > 0) {
       this.storage.remove('title');
       this.notifications = [];
     }*/
