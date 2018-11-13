@@ -30,10 +30,9 @@
     "ajv": "^6.5.5",
     "ajv-keywords": "^3.2.0",
     "angular-highcharts": "^7.0.2",
-    "com.red_folder.phonegap.plugin.backgroundservice": "git+https://github.com/icecoolinux/bgs-core.git",
-    "cordova-android": "7.1.2",
+    "com.red_folder.phonegap.plugin.backgroundservice": "git+https://github.com/felipe-ff/plugin-background-service.git",
+    "cordova-android": "6.3.0",
     "cordova-plugin-autostart": "^2.3.0",
-    "cordova-plugin-bgs-core": "^1.1.2",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic": "^5.2.7",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
@@ -71,6 +70,8 @@
       "cordova-plugin-autostart": {},
       "com.red_folder.phonegap.plugin.backgroundservice": {}
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   }
 }
