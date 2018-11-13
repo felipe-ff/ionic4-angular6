@@ -13,7 +13,7 @@ export class UtilityService {
   constructor() {}
 
   initialize() {
-    var serviceName = "io.ionic.starter.MyService";
+    var serviceName = "felipe.finance.auto.MyService";
     //var factory = cordova.require('com.red_folder.phonegap.plugin.backgroundservice.BackgroundService');
     this.myService = backgroundService.create(serviceName);
   }
