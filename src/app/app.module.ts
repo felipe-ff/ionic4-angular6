@@ -15,6 +15,11 @@ import { Autostart } from '@ionic-native/autostart';
 import { UtilityService } from '../services/utility.service';
 import { Globals } from '../services/globals';
 
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -24,7 +29,9 @@ import { Globals } from '../services/globals';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule // imports firebase/firestore, only needed for database features
   ],
   bootstrap: [IonicApp],
   entryComponents: [

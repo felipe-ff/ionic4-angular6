@@ -88,5 +88,7 @@
     <plugin name="cordova-sqlite-storage" spec="^2.5.1" />
     <plugin name="cordova-plugin-autostart" spec="^2.3.0" />
     <plugin name="com.red_folder.phonegap.plugin.backgroundservice" spec="https://github.com/felipe-ff/plugin-background-service.git" />
+    <plugin name="cordova-plugin-firebase" spec="2.0.5" />
     <engine name="android" spec="7.1.2" />
+    <engine name="browser" spec="5.0.4" />
 </widget>

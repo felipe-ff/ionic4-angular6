@@ -13,6 +13,10 @@ import { Storage } from "@ionic/storage";
 
 import { UtilityService } from "../services/utility.service";
 import { Globals } from "../services/globals";
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection} from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+
+export interface Item { id: string; name: string; }
 
 @Component({
   templateUrl: "app.html"
@@ -23,6 +27,8 @@ export class MyApp {
   rootPage: any = HomePage;
 
   pages: Array<{ title: string; component: any }>;
+  private itemsCollection: AngularFirestoreCollection<Item>;
+  items: Observable<Item[]>;
 
   constructor(
     public platform: Platform,
@@ -33,7 +39,8 @@ export class MyApp {
     private zone: NgZone,
     public storage: Storage,
     private util: UtilityService,
-    private globals: Globals
+    private globals: Globals,
+    public db: AngularFirestore
   ) {
     this.initializeApp();
 
@@ -47,6 +54,15 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       //console.log(window['plugins']);
+
+      this.itemsCollection = this.db.collection<Item>('items');
+      this.items = this.itemsCollection.valueChanges();
+      this.itemsCollection.add({id : 'd', name: 'e'});
+      //this.items = this.db.collection('users').valueChanges();
+      this.items.forEach( s => {
+        console.log(s);
+      });
+
       try {
         if (!(this.platform.is("mobileweb") || this.platform.is("core"))) {
           this.util.initialize();
