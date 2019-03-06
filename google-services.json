@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1061092545505",
+    "firebase_url": "https://finance-auto.firebaseio.com",
+    "project_id": "finance-auto",
+    "storage_bucket": "finance-auto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061092545505:android:36c9909f0e330f4d",
+        "android_client_info": {
+          "package_name": "felipe.finance.auto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061092545505-p4bdfpsrmf0nkhi6737331lsk15pi5ra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA50sfmsGy6h8VPBcH-1KkoWYeNRJ5tpn4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,10 +7,10 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 import { IonicStorageModule } from '@ionic/storage';
-import { Autostart } from '@ionic-native/autostart';
+import { Autostart } from '@ionic-native/autostart/ngx';
 
 import { UtilityService } from '../services/utility.service';
 import { Globals } from '../services/globals';
@@ -48,4 +48,10 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private afs: AngularFirestoreModule) {
+
+    //afs['firestore'].settings({timestampsInSnapshots: true});
+    console.log(afs['firestore']);
+  }
+}

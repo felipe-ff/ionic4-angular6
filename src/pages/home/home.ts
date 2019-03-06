@@ -19,7 +19,7 @@ const High = Highcharts;
 export class HomePage {
 
   @ViewChild('chartTarget') chartTarget: ElementRef;
-  chart: Highcharts.ChartObject;
+  chart: Highcharts.Chart;
 
   constructor(public navCtrl: NavController, private globals: Globals, public storage: Storage,
               public events: Events, private zone: NgZone, public alertCtrl: AlertController) {
@@ -49,14 +49,7 @@ export class HomePage {
         title: {
           text: 'Fruit eaten'
         }
-      },
-      series: [{
-        name: 'Jane',
-        data: [1, 0, 4]
-      }, {
-        name: 'John',
-        data: [5, 7, 3]
-      }]
+      }
     });
 
   }
