@@ -61,6 +61,9 @@ export class MyApp {
       //this.items = this.db.collection('users').valueChanges();
 
       //TESTANDO NOVO COMMIT
+
+      //TESTANDO COMMIT 2
+
       this.items.forEach( s => {
         console.log(s);
       });
