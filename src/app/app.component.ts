@@ -59,6 +59,8 @@ export class MyApp {
       this.items = this.itemsCollection.valueChanges();
       this.itemsCollection.add({id : 'd', name: 'e'});
       //this.items = this.db.collection('users').valueChanges();
+
+      //TESTANDO NOVO COMMIT
       this.items.forEach( s => {
         console.log(s);
       });
