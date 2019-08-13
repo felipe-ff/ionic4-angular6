@@ -60,6 +60,7 @@ export class MyApp {
       this.itemsCollection.add({id : 'd', name: 'e'});
       //this.items = this.db.collection('users').valueChanges();
 
+      //NOVO COMMIT 3
       //TESTANDO NOVO COMMIT
 
       //TESTANDO COMMIT 2
