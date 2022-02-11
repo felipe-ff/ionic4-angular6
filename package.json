@@ -29,7 +29,7 @@
     "@ionic/pro": "^2.0.4",
     "@ionic/storage": "^2.2.0",
     "@types/highcharts": "^5.0.33",
-    "ajv": "^6.5.5",
+    "ajv": "^6.12.3",
     "ajv-keywords": "^3.2.0",
     "angular-highcharts": "^7.0.2",
     "com.red_folder.phonegap.plugin.backgroundservice": "git+https://github.com/felipe-ff/plugin-background-service.git",
